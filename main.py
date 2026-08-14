@@ -1,28 +1,17 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+import os
 
-app = FastAPI()
+import uvicorn
 
-# Health check
-@app.get('/')
-def healthcheck():
-    return {'OK'}
 
-# Shorten link
-@app.post('/')
-def shorten_link(link):
-    return {"Shortened Link"}
+def run() -> None:
+    uvicorn.run(
+        "app:app",
+        app_dir="app",
+        host=os.getenv("APP_HOST", "127.0.0.1"),
+        port=int(os.getenv("APP_PORT", "8000")),
+        reload=os.getenv("APP_RELOAD", "true").lower() == "true",
+    )
 
-# Open shortlink
-@app.get('/{shortlink}')
-def redirect(shortlink):
-    return {"Redirect to link"}
 
-# Deletes
-@app.delete('/{shortlink}')
-def delete(shortlink):
-    # Cek apakah dia yang buat
-    if (True):
-        return {"Shortlink deleted"}
-    else:
-        return {"No you don't"}
+if __name__ == "__main__":
+    run()
