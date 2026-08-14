@@ -1,0 +1,30 @@
+services:
+  api:
+    build: .
+    container_name: myshortlink
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db:5432
+      DB_PASSWORD: dbpassword
+      DB_USER: postgres
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:18
+    container_name: shortlink-db
+    environment:
+      POSTGRES_PASSWORD: dbpassword
+      POSTGRES_USER: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:

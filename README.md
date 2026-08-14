@@ -11,8 +11,9 @@ endpoints:
 
 rencana:
 
-- [ ] Base app
+- [x] Base app
 - [x] Github
+- [x] Docker
 - [ ] Jenkins
 - [ ] Build & push ke registry
 - [ ] k8s (k3s)
