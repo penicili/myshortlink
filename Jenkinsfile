@@ -37,7 +37,7 @@ pipeline {
             }
         }
         
-        stage ('Push Image to dockerhub')
+        stage ('Push Image to dockerhub'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pat', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASSWORD')]){
                     sh '''
@@ -47,6 +47,7 @@ pipeline {
                     '''
                 }
             }
+        }
         
         stage ('Deploy')
             steps{
