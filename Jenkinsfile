@@ -41,7 +41,7 @@ pipeline {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pat', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASSWORD')]){
                     sh '''
-                        echo $DOCKER_PASS | docker login -u $HUB_USER --password-stdin
+                        echo $HUB_PASSWORD | docker login -u $HUB_USER --password-stdin
                         docker push $IMAGE_NAME:$IMAGE_TAG
                         docker push $IMAGE_NAME:latest
                     '''
