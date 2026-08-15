@@ -1,24 +1,51 @@
 pipeline {
-    agent { label 'python-agent '}
+    agent { label 'python-agent' }
 
     environment {
         VENV_DIR = 'venv'
     }
+
     stages {
-        stage("build"){
-            steps{
-                echo 'lagi build'
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                    python3 -m venv $VENV_DIR
+                    . $VENV_DIR/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
-        stage("test"){
-            steps{
-                echo 'lagi test'
+
+        stage('Test') {
+            steps {
+                sh '''
+                    . $VENV_DIR/bin/activate
+                    pip install pytest
+                    pytest tests/ -v
+                '''
             }
         }
-        stage("deploy"){
-            steps{
-                echo 'lagi deploy'
+
+        stage('Build Verification') {
+            steps {
+                sh '''
+                    . $VENV_DIR/bin/activate
+                    python -c "import main; print('Import OK')"
+                '''
             }
+        }
+    }
+
+    post {
+        always {
+            sh 'rm -rf $VENV_DIR'
+        }
+        success {
+            echo 'Build & test berhasil!'
+        }
+        failure {
+            echo 'Ada yang gagal, cek log stage di atas.'
         }
     }
 }
