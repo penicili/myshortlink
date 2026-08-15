@@ -1,8 +1,10 @@
 pipeline {
-    agent { label 'python-agent' }
+    agent { label 'slave-1' }
 
     environment {
         VENV_DIR = 'venv'
+        IMAGE_NAME= 'penicili/myshortlink'
+        IMAGE_TAG= "${BUILD_NUMBER}"
     }
 
     stages {
@@ -27,14 +29,29 @@ pipeline {
             }
         }
 
-        stage('Build Verification') {
+        stage('Build Image') {
             steps {
                 sh '''
-                    . $VENV_DIR/bin/activate
-                    python -c "import main; print('Import OK')"
+                    docker build -t $IMAGE_NAME:$IMAGE_TAG -t $IMAGE_NAME:latest .
                 '''
             }
         }
+        
+        stage ('Push Image to dockerhub')
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-pat', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASSWORD')]){
+                    sh '''
+                        echo DOCKER_PASS | docker login -u $HUB_USER --password-stdin
+                        docker push $IMAGE_NAME:$IMAGE_TAG
+                        docker push $IMAGE_NAME:latest
+                    '''
+                }
+            }
+        
+        stage ('Deploy')
+            steps{
+                echo "ya nanti di deploy lah gimana gitu pokonya anu lah"
+            }
     }
 
     post {

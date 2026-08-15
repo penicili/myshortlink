@@ -14,7 +14,7 @@ rencana:
 - [x] Base app
 - [x] Github
 - [x] Docker
-- [ ] Jenkins
+- [x] Jenkins
 - [ ] Build & push ke registry
 - [ ] k8s (k3s)
 - [ ] Full pipeline
