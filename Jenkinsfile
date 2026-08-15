@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent { label 'python-agent '}
+
+    environment {
+        VENV_DIR = 'venv'
+    }
     stages {
         stage("build"){
             steps{
