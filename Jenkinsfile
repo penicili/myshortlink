@@ -49,10 +49,11 @@ pipeline {
             }
         }
         
-        stage ('Deploy')
+        stage ('Deploy'){
             steps{
                 echo "ya nanti di deploy lah gimana gitu pokonya anu lah"
             }
+        }
     }
 
     post {
