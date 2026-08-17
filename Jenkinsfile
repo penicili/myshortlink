@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         VENV_DIR = 'venv'
-        IMAGE_NAME= 'penicili/myshortlink'
+        IMAGE_NAME= 'myshortlink'
         IMAGE_TAG= "${BUILD_NUMBER}"
         REGISTRY_HOST= '192.168.1.150:5000'
     }
