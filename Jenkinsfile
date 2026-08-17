@@ -5,6 +5,7 @@ pipeline {
         VENV_DIR = 'venv'
         IMAGE_NAME= 'penicili/myshortlink'
         IMAGE_TAG= "${BUILD_NUMBER}"
+        REGISTRY_HOST= '192.168.1.150:5000'
     }
 
     stages {
@@ -39,13 +40,9 @@ pipeline {
         
         stage ('Push Image to dockerhub'){
             steps{
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-pat', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASSWORD')]){
-                    sh '''
-                        echo $HUB_PASSWORD | docker login -u $HUB_USER --password-stdin
-                        docker push $IMAGE_NAME:$IMAGE_TAG
-                        docker push $IMAGE_NAME:latest
-                    '''
-                }
+                sh '''
+                    docker push $REGISTRY_HOST/$IMAGE_NAME:$IMAGE_TAG
+                '''
             }
         }
         

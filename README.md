@@ -15,8 +15,8 @@ rencana:
 - [x] Github
 - [x] Docker
 - [x] Jenkins
-- [ ] Build & push ke registry
-- [ ] k8s (k3s)
+- [x] Build & push ke registry
+- [x] k8s (k3s)
 - [ ] Full pipeline
 - [ ] GitOps
 - [ ] ArgoCD
