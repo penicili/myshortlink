@@ -7,6 +7,8 @@ pipeline {
         IMAGE_TAG = "${BUILD_NUMBER}"
         REGISTRY_HOST = '192.168.1.150:5000'
         IMAGE = "${REGISTRY_HOST}/${IMAGE_NAME}"
+        DEPLOYMENT_NAME = 'myshortlink'
+        CONTAINER_NAME = 'myshortlink'
     }
 
     stages {
@@ -53,18 +55,22 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Nanti deploy ke K3s"
+                sh '''
+                    sed "s|__IMAGE_TAG__|$IMAGE_TAG|g" k8s/api.yaml > api-rendered.yaml
+                    kubectl apply -f api-rendered.yaml
+                    kubectl rollout status deployment/$DEPLOYMENT_NAME --timeout=120s
+                '''
             }
         }
     }
 
     post {
         always {
-            sh 'rm -rf $VENV_DIR'
+            sh 'rm -rf $VENV_DIR api-rendered.yaml'
         }
 
         success {
-            echo 'Build, test & push berhasil!'
+            echo 'Build, test, push & deploy berhasil!'
         }
 
         failure {
