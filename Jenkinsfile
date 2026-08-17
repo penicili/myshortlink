@@ -3,9 +3,10 @@ pipeline {
 
     environment {
         VENV_DIR = 'venv'
-        IMAGE_NAME= 'myshortlink'
-        IMAGE_TAG= "${BUILD_NUMBER}"
-        REGISTRY_HOST= '192.168.1.150:5000'
+        IMAGE_NAME = 'penicili/myshortlink'
+        IMAGE_TAG = "${BUILD_NUMBER}"
+        REGISTRY_HOST = '192.168.1.150:5000'
+        IMAGE = "${REGISTRY_HOST}/${IMAGE_NAME}"
     }
 
     stages {
@@ -33,22 +34,26 @@ pipeline {
         stage('Build Image') {
             steps {
                 sh '''
-                    docker build -t $IMAGE_NAME:$IMAGE_TAG -t $IMAGE_NAME:latest .
+                    docker build \
+                        -t $IMAGE:$IMAGE_TAG \
+                        -t $IMAGE:latest \
+                        .
                 '''
             }
         }
-        
-        stage ('Push Image to dockerhub'){
-            steps{
+
+        stage('Push Image') {
+            steps {
                 sh '''
-                    docker push $REGISTRY_HOST/$IMAGE_NAME:$IMAGE_TAG
+                    docker push $IMAGE:$IMAGE_TAG
+                    docker push $IMAGE:latest
                 '''
             }
         }
-        
-        stage ('Deploy'){
-            steps{
-                echo "ya nanti di deploy lah gimana gitu pokonya anu lah"
+
+        stage('Deploy') {
+            steps {
+                echo "Nanti deploy ke K3s"
             }
         }
     }
@@ -57,9 +62,11 @@ pipeline {
         always {
             sh 'rm -rf $VENV_DIR'
         }
+
         success {
-            echo 'Build & test berhasil!'
+            echo 'Build, test & push berhasil!'
         }
+
         failure {
             echo 'Ada yang gagal, cek log stage di atas.'
         }
