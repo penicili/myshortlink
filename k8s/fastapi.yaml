@@ -19,6 +19,16 @@ spec:
         image: penicili/myshortlink:latest
         ports:
         - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: postgres-service:5432
+        - name: DB_USER
+          value: postgres
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
 ---
 kind: Service
 apiVersion: v1
@@ -31,4 +41,4 @@ spec:
   ports:
   - name:  fastapi
     port:  8000
-    targetPort:  8080
+    targetPort:  8000
