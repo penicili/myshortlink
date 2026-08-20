@@ -18,17 +18,17 @@ spec:
       - name: shortlink
         image: penicili/myshortlink:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8000
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name:  Service Name
+  name:  shortlink-app
 spec:
   selector:
-    app:  Selector Label
-  type:  LoadBalancer | ClusterIP | NodePort
+    app:  shortlink
+  type:  NodePort
   ports:
-  - name:  name-of-the-port
-    port:  80
+  - name:  fastapi
+    port:  8000
     targetPort:  8080
