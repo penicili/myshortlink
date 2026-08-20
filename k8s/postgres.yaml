@@ -23,8 +23,8 @@ spec:
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef: 
-            name: postgres-secret
-            key: postgres-password
+              name: postgres-secret
+              key: postgres-password
 ---
 kind: Service
 apiVersion: v1
