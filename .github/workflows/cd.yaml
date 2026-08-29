@@ -9,4 +9,4 @@ jobs:
   on-success:
     runs-on: self-hosted
     steps:
-      -run: echo "nganu"
+      - run: echo "nganu"
