@@ -31,6 +31,12 @@ jobs:
     runs-on: self-hosted
     steps:
       -
+        name: Install argocd cli
+        run:
+          curl -ksSL -o argocd https://argocd-server.argocd/download/argocd-linux-amd64
+          chmod +x argocd
+          mv ./argocd /usr/local/bin/argocd
+      -
         name: ArgoCD login and sync
         run: 
           argocd login argocd-server.argocd \
