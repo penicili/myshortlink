@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: shortlink-ingress
 spec:
+  ingressClassName: nginx
   rules:
   - host: "shortlink.test.com"
     http:
@@ -11,6 +12,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: shortlink
+            name: shortlink-app
             port:
               number: 8000
