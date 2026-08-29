@@ -4,6 +4,8 @@ from secrets import token_urlsafe
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
+import socket
+from datetime import datetime
 
 try:
     from .database import get_db, init_db
@@ -27,7 +29,10 @@ class Link(BaseModel):
 # Health check
 @app.get("/")
 def healthcheck():
-    return {"status": "OK"}
+    return {
+        "hostname": socket.gethostname(),
+        "time": datetime.now()
+        }
 
 
 # Create shortlink
