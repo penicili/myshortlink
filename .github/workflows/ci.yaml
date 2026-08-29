@@ -32,13 +32,13 @@ jobs:
     steps:
       -
         name: Install argocd cli
-        run:
+        run: |
           curl -ksSL -o argocd https://argocd-server.argocd/download/argocd-linux-amd64
           chmod +x argocd
           sudo mv ./argocd /usr/local/bin/argocd
       -
         name: ArgoCD login and sync
-        run: 
+        run: |
           argocd login argocd-server.argocd \
             --insecure --grpc-web --username admin \
             --password ${{ secrets.ARGOCD_CLI_PASSWORD }}
