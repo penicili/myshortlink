@@ -31,7 +31,8 @@ class Link(BaseModel):
 def healthcheck():
     return {
         "hostname": socket.gethostname(),
-        "time": datetime.now()
+        "time": datetime.now(),
+        "hellow": "hello"
         }
 
 

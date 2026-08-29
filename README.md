@@ -14,10 +14,11 @@ rencana:
 - [x] Base app
 - [x] Github
 - [x] Docker
-- [x] Jenkins
+- [x] Jenkins (pre argo)
 - [x] Build & push ke registry
-- [x] k8s (k3s)
-- [ ] Full pipeline
+- [x] k8s (kind)
+- [x] Full pipeline
+- [x] ArgoCD
+- [ ] Github Actions
 - [ ] GitOps
-- [ ] ArgoCD
 - [ ] Monitoring (Grafana & Prometheus)
