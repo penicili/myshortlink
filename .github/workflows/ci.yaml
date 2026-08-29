@@ -8,7 +8,7 @@ on:
       - master
 
 jobs:
-  docker:
+  ci:
     runs-on: ubuntu-latest
     steps:
       -
@@ -26,3 +26,14 @@ jobs:
         with:
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/myshortlink:${{ steps.commit.outputs.short }}
+  cd:
+    needs: ci
+    runs-on: self-hosted
+    steps:
+      -
+        name: ArgoCD login and sync
+        run: 
+          argocd login argocd-server.argocd \
+            --insecure --grpc-web --username admin \
+            --password ${{ secrets.ARGOCD_CLI_PASSWORD }}
+          argocd app sync shortlink-app
