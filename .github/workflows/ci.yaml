@@ -41,5 +41,5 @@ jobs:
         run: |
           argocd login argocd-server.argocd \
             --insecure --grpc-web --username admin \
-            --password ${{ secrets.ARGOCD_CLI_PASSWORD }}
+            --password qFZQWOAwILJEsdFD
           argocd app sync shortlink-app
