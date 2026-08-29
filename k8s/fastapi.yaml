@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: shortlink
-        image: penicili/myshortlink:latest
+        image: penicili/myshortlink:27-08
         ports:
         - containerPort: 8000
         env:
