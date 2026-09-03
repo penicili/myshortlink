@@ -10,6 +10,8 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    outputs:
+      commit_id: ${{ steps.commit.outputs.short }}
     steps:
       -
         name: Login to Docker Hub
@@ -30,6 +32,23 @@ jobs:
     needs: ci
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v7
+      -
+        name: Change values file
+        shell: bash
+        env:
+          VERSION: v4.44.3
+          PLATFORM: linux_amd64
+        run: |
+          echo ${{needs.ci.outputs.commit_id}}
+          curl -L "https://github.com/mikefarah/yq/releases/download/${VERSION}/yq_${PLATFORM}" -o /usr/local/bin/yq && \
+          chmod +x /usr/local/bin/yq
+          yq -i '.images.tag = "${{needs.ci.outputs.commit_id}}"' helm/shortlink-app/values.yaml
+      -
+        name: Commit Changes
+        uses: EndBug/add-and-commit@v10
+        with:
+          message: 'Update valuies.yaml with commit ${{needs.ci.outputs.commit_id}}'
       -
         name: Install argocd cli
         run: |

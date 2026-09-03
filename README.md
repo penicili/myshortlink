@@ -22,3 +22,9 @@ rencana:
 - [ ] Github Actions
 - [ ] GitOps
 - [ ] Monitoring (Grafana & Prometheus)
+
+
+---
+### Pipeline
+1. Jenkins Pipeline: Test and build image, lalu push ke docker hub= (agent jenkins)
+2. Github Actions Pipeline: Build image, push ke docker hub (Github actions runner). trigger update ArgoCD (self-hosted runner)
