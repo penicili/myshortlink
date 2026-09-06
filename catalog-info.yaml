@@ -6,7 +6,13 @@ metadata:
   # Example for optional annotations
   annotations:
     github.com/project-slug: penicili/myshortlink
-  #   backstage.io/techdocs-ref: dir:.
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - title: Website
+      url:  http://shortlink.test.com
+
+    - title: SwaggerUI docs
+      url: http://shortlink.test.com/docs
 spec:
   type: service
   owner: dragon

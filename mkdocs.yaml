@@ -1,0 +1,11 @@
+site_name: 'myshortlink'
+site_description: 'Main documentation for myshortlink app'
+repo_url: https://github.com/penicili/myshortlink
+edit_uri: edit/master/docs
+
+plugins:
+  - techdocs-core
+
+nav:
+  - Overview:
+    - Getting started: 'docs/index.md'
