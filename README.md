@@ -1,4 +1,4 @@
-# Aplikasi shortlink sederhana gabut buat belajar DevOps
+# API shortlink buat belajar DevOps
 
 endpoints:
 
@@ -19,12 +19,13 @@ rencana:
 - [x] k8s (kind)
 - [x] Full pipeline
 - [x] ArgoCD
-- [ ] Github Actions
-- [ ] GitOps
-- [ ] Monitoring (Grafana & Prometheus)
+- [x] Github Actions
+- [x] GitOps
+- [x] Backstage Component (catalog-info)
+- [ ] Observability
 
 
 ---
 ### Pipeline
-1. Jenkins Pipeline: Test and build image, lalu push ke docker hub= (agent jenkins)
-2. Github Actions Pipeline: Build image, push ke docker hub (Github actions runner). trigger update ArgoCD (self-hosted runner)
+1. Jenkins Pipeline (udh gadipake): Test and build image, lalu push ke docker hub= (run on agent jenkins)
+2. Github Actions Pipeline: Build image, push ke docker hub (run on Github actions runner). trigger update ArgoCD (run onself-hosted runner)
